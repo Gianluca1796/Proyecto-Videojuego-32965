@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Door
+  - Key
+  - Drawer
+  - Static
+  - Phone
+  - Book
   layers:
   - Default
   - TransparentFX
@@ -11,10 +17,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Interactable
+  - Picture
+  - Interactable2
+  - Interactable3
   - 
   - 
   - 

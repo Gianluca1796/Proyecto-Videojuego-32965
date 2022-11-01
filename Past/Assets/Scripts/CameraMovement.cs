@@ -4,14 +4,28 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
+    public GameObject doorMessage;
+
+    public BasementDoor basementDoor;
     public float mouseSensitivity = 80f;
     public Transform player;
+    public new Transform camera;
+
+    public float rayDistance = 2f;
     float xRotation = 0;
-    void Start()
+
+    public RaycastHit hit;
+
+    public bool cubeRed;
+    public bool cubeViolet;
+    public bool cubeGreen;
+
+
+    private void Start()
     {
+        
 
     }
-
     void Update()
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
@@ -23,5 +37,84 @@ public class CameraMovement : MonoBehaviour
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
         player.Rotate(Vector3.up * mouseX);
+        
+        Debug.DrawRay(camera.position, camera.forward * rayDistance, Color.blue);
+
+        Interactable();
+
     }
+
+    void Interactable()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(camera.position, camera.forward * rayDistance, out hit, rayDistance))
+        {
+            if (hit.collider.GetComponent<Interactable>() == true)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (hit.collider.GetComponent<Interactable>().isLigth == true)
+                    {
+                        hit.collider.GetComponent<Interactable>().changeOnOff();
+                    }
+                }
+            }
+            if (hit.collider.GetComponent<CubesPuzzle>() == true)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (cubeRed == true)
+                    {
+                        hit.collider.GetComponent<CubesPuzzle>().cubeRed();
+                    }
+                    if (cubeViolet == true)
+                    {
+                        hit.collider.GetComponent<CubesPuzzle>().cubeViolet();
+                    }
+                    if (cubeGreen == true)
+                    {
+                        hit.collider.GetComponent<CubesPuzzle>().cubeGreen();
+                    }
+                }
+            }
+            if (hit.collider.GetComponent<GrabCube>() == true)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    hit.collider.GetComponent<GrabCube>().grabGreen();
+                }
+            }
+            if (hit.collider.GetComponent<GrabCubeRed>() == true)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    hit.collider.GetComponent<GrabCubeRed>().grabRed();
+                }
+            }
+            if (hit.collider.GetComponent<GrabCubeViolet>() == true)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    hit.collider.GetComponent<GrabCubeViolet>().grabViolet();
+                }
+            }
+            if (Physics.Raycast(camera.position, camera.forward, out hit, rayDistance) && hit.transform.tag == "Door")
+            {
+                doorMessage.SetActive(true);
+            }
+            else
+            {
+                doorMessage.SetActive(false);
+            }
+            if (Physics.Raycast(camera.position, camera.forward, out hit, rayDistance) && hit.transform.tag == "Key" && Input.GetMouseButtonDown(0))
+            {
+
+                basementDoor.key = 1;
+            }
+
+        }
+
+    }
+
 }
+

@@ -6,10 +6,12 @@ public class PlayerMove : MonoBehaviour
 {
     public CharacterController controller;
     public float speedMove = 2f;
-    public float life = 100;
     public AudioSource walk;
     private bool horActive;
     private bool VerActive;
+    public Texture2D pointer;
+    public Texture2D bluePointer;
+    
     void Start()
     {
 
@@ -18,8 +20,6 @@ public class PlayerMove : MonoBehaviour
     void Update()
     {
         MovementPlayer();
-        Damage();
-        RestoreHealth();
     }
 
     void MovementPlayer()
@@ -29,48 +29,38 @@ public class PlayerMove : MonoBehaviour
 
         Vector3 direction = transform.right * x + transform.forward * z;
         controller.Move(direction * speedMove * Time.deltaTime);
-        if(Input.GetButtonDown("Horizontal"))
+        if (Input.GetButtonDown("Horizontal"))
         {
             horActive = true;
             walk.Play();
         }
-        if(Input.GetButtonDown("Vertical"))
+        if (Input.GetButtonDown("Vertical"))
         {
             VerActive = true;
             walk.Play();
         }
-        if(Input.GetButtonUp("Horizontal"))
+        if (Input.GetButtonUp("Horizontal"))
         {
             horActive = false;
-            if(VerActive == false)
+            if (VerActive == false)
             {
-            walk.Pause();
+                walk.Pause();
             }
         }
-        if(Input.GetButtonUp("Vertical"))
+        if (Input.GetButtonUp("Vertical"))
         {
             VerActive = false;
-            if(horActive == false)
+            if (horActive == false)
             {
-            walk.Pause();
+                walk.Pause();
             }
         }
     }
 
-    void Damage()
+
+    void OnGUI()
     {
-        if (Input.GetKey(KeyCode.S))
-        {
-            life-= Time.deltaTime;
-            Debug.Log("Mi vida esta bajando");
-        }
-    }
-    void RestoreHealth()
-    {
-        if (Input.GetKey(KeyCode.W))
-        {
-            life+= Time.deltaTime;
-            Debug.Log("Mi vida esta subiendo");
-        }
+        Rect rect = new Rect(Screen.width / 2, Screen.height / 2, pointer.width, pointer.height);
+        GUI.DrawTexture(rect, pointer);
     }
 }
