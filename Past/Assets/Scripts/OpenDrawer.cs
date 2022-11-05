@@ -12,6 +12,7 @@ public class OpenDrawer : MonoBehaviour
     public Animator drawer2;
     private bool isOpen;
     private float rayDistance;
+    
     void Start()
     {
         cam = GameObject.Find("Camera");

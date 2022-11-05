@@ -4,18 +4,12 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    public GameObject doorMessage;
-
-    public BasementDoor basementDoor;
     public float mouseSensitivity = 80f;
     public Transform player;
     public new Transform camera;
-
     public float rayDistance = 2f;
     float xRotation = 0;
-
     public RaycastHit hit;
-
     public bool cubeRed;
     public bool cubeViolet;
     public bool cubeGreen;
@@ -49,16 +43,6 @@ public class CameraMovement : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(camera.position, camera.forward * rayDistance, out hit, rayDistance))
         {
-            if (hit.collider.GetComponent<Interactable>() == true)
-            {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    if (hit.collider.GetComponent<Interactable>().isLigth == true)
-                    {
-                        hit.collider.GetComponent<Interactable>().changeOnOff();
-                    }
-                }
-            }
             if (hit.collider.GetComponent<CubesPuzzle>() == true)
             {
                 if (Input.GetMouseButtonDown(0))
@@ -98,20 +82,6 @@ public class CameraMovement : MonoBehaviour
                     hit.collider.GetComponent<GrabCubeViolet>().grabViolet();
                 }
             }
-            if (Physics.Raycast(camera.position, camera.forward, out hit, rayDistance) && hit.transform.tag == "Door")
-            {
-                doorMessage.SetActive(true);
-            }
-            else
-            {
-                doorMessage.SetActive(false);
-            }
-            if (Physics.Raycast(camera.position, camera.forward, out hit, rayDistance) && hit.transform.tag == "Key" && Input.GetMouseButtonDown(0))
-            {
-
-                basementDoor.key = 1;
-            }
-
         }
 
     }

@@ -14,7 +14,7 @@ public class PuzzleSound : MonoBehaviour
 
     private void Start()
     {
-        objectToFind = GameObject.Find("WhisperTwo");
+        objectToFind = GameObject.Find("PuzzleSound");
         Sounds = objectToFind.GetComponent<AudioSource>();
         cubeBox = GameObject.Find("CubesBox");
         cubeBoxSound = cubeBox.GetComponent<AudioSource>();

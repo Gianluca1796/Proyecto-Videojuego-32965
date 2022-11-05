@@ -10,6 +10,8 @@ TagManager:
   - Static
   - Phone
   - Book
+  - Switch
+  - Switch1
   layers:
   - Default
   - TransparentFX
