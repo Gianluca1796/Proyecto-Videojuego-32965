@@ -13,6 +13,9 @@ public class CameraMovement : MonoBehaviour
     public bool cubeRed;
     public bool cubeViolet;
     public bool cubeGreen;
+    public Texture2D pointer;
+    public Texture2D bluePointer;
+    bool canInteract = false;
 
 
     private void Start()
@@ -34,13 +37,25 @@ public class CameraMovement : MonoBehaviour
         
         Debug.DrawRay(camera.position, camera.forward * rayDistance, Color.blue);
 
+        SearchObject();
+
         Interactable();
 
     }
 
+    void SearchObject()
+    {
+        canInteract = false;
+        if (Physics.Raycast(camera.position, camera.forward * rayDistance, out hit, rayDistance, LayerMask.GetMask("Interactable")))
+        {
+                canInteract = true;
+        }
+        
+    }
+
     void Interactable()
     {
-        RaycastHit hit;
+        
         if (Physics.Raycast(camera.position, camera.forward * rayDistance, out hit, rayDistance))
         {
             if (hit.collider.GetComponent<CubesPuzzle>() == true)
@@ -84,6 +99,16 @@ public class CameraMovement : MonoBehaviour
             }
         }
 
+    }
+    
+    void OnGUI()
+    {
+        Rect rect = new Rect(Screen.width / 2, Screen.height / 2, pointer.width, pointer.height);
+        GUI.DrawTexture(rect, pointer);
+        if(canInteract)
+        {
+            GUI.DrawTexture(rect, bluePointer);
+        }
     }
 
 }

@@ -10,8 +10,10 @@ public class PhoneInteractable : MonoBehaviour
     public Transform camTransform;
     public RaycastHit hit;
     private float rayDistance;
-
+    public AudioSource noteSlide;
     public GameObject phoneInteractable;
+
+    public GameObject noteAtTheDoor;
 
 
     private void Start()
@@ -52,7 +54,10 @@ public class PhoneInteractable : MonoBehaviour
     }
     IEnumerator desactivePhone()
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(17);
         phoneInteractable.SetActive(false);
+        noteSlide.Play();
+        noteAtTheDoor.SetActive(true);
+        
     }
 }

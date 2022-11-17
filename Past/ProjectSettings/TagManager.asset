@@ -12,6 +12,9 @@ TagManager:
   - Book
   - Switch
   - Switch1
+  - Interactable
+  - Meet
+  - Note
   layers:
   - Default
   - TransparentFX

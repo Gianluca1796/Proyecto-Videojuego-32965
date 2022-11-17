@@ -9,8 +9,7 @@ public class PlayerMove : MonoBehaviour
     public AudioSource walk;
     private bool horActive;
     private bool VerActive;
-    public Texture2D pointer;
-    public Texture2D bluePointer;
+
     
     void Start()
     {
@@ -58,9 +57,4 @@ public class PlayerMove : MonoBehaviour
     }
 
 
-    void OnGUI()
-    {
-        Rect rect = new Rect(Screen.width / 2, Screen.height / 2, pointer.width, pointer.height);
-        GUI.DrawTexture(rect, pointer);
-    }
 }

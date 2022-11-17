@@ -11,8 +11,7 @@ public class ShowNoteUI : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && active == true)
         {
             UINote.SetActive(true);
-            
-            
+
         }
 
     }

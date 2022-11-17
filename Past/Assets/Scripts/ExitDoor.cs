@@ -5,6 +5,7 @@ using UnityEngine;
 public class ExitDoor : MonoBehaviour
 {
     public GameObject doorMessage;
+    public GameObject meetMessage;
     public GameObject cam;
     public CameraMovement camMov;
     public Transform camTransform;
@@ -33,11 +34,15 @@ public class ExitDoor : MonoBehaviour
             if (Physics.Raycast(camTransform.position, camTransform.forward, out hit, rayDistance) && hit.transform.tag == "Door")
             {
                 doorMessage.SetActive(true);
-            }
-            else
+            }else{
+                 doorMessage.SetActive(false);
+            };
+            if (Physics.Raycast(camTransform.position, camTransform.forward, out hit, rayDistance) && hit.transform.tag == "Meet")
             {
-                doorMessage.SetActive(false);
-            }
+                meetMessage.SetActive(true);
+            }else{
+                 meetMessage.SetActive(false);
+            }            
         }
     }
 }

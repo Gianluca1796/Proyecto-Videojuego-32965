@@ -8,6 +8,9 @@ public class CubesPuzzle : MonoBehaviour
     public int cubes = 0;
     private GameObject cam;
 
+    public GameObject zombie;
+    public GameObject DesactiveZombie;
+
     [SerializeField]
     private GameObject newCubeRed;
     [SerializeField]
@@ -66,6 +69,10 @@ public class CubesPuzzle : MonoBehaviour
             puzzleDone = true;
 
         }
+        if(cubes == 2){
+            zombie.SetActive(true);
+            DesactiveZombie.SetActive(true);    
+        }
         actions();
     }
     void actions()
@@ -73,7 +80,8 @@ public class CubesPuzzle : MonoBehaviour
         if (puzzleDone == true)
         {
             closetToDestroy.SetActive(false);
-            closetToActivate.SetActive(true);        
+            closetToActivate.SetActive(true); 
+
         }
     }
 

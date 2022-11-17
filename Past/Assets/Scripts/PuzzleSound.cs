@@ -41,6 +41,7 @@ public class PuzzleSound : MonoBehaviour
             if (cubesPuzzle.cubes == 3)
             {
                 cubeBoxSound.Play();
+                
             }
 
         }
