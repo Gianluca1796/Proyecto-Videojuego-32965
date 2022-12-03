@@ -9,6 +9,7 @@ public class CubesPuzzle : MonoBehaviour
     private GameObject cam;
 
     public GameObject zombie;
+    public GameObject candle;
     public GameObject DesactiveZombie;
 
     [SerializeField]
@@ -71,6 +72,7 @@ public class CubesPuzzle : MonoBehaviour
         }
         if(cubes == 2){
             zombie.SetActive(true);
+            candle.SetActive(true);
             DesactiveZombie.SetActive(true);    
         }
         actions();
