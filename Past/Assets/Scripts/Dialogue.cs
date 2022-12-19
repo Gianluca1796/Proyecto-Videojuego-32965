@@ -1,30 +1,39 @@
 using System.Collections;
 using UnityEngine;
+
 using TMPro;
 
 public class Dialogue : MonoBehaviour
 {
+    public Transform player;
+    public Transform maskPos;
     public PlayerMove playerMove;
     public AudioSource walk;
+    public AudioSource siren;
+    public GameObject postProcessZone;
+    public GameObject diaologueZone;
+    public GameObject maskInTheFloor;
+
+    #region DIALOGUE
     private bool isInZone;
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TMP_Text dialogueText;
-    [SerializeField,TextArea(4,6)] private string[] dialogueLines;
+    [SerializeField, TextArea(4, 6)] private string[] dialogueLines;
     private bool didDialogueStart;
     private int lineIndex;
     private float typingTime = 0.05f;
-
+    #endregion
 
 
     void Update()
     {
-        if(isInZone && Input.GetButtonDown("Fire1"))
+        if (isInZone && Input.GetButtonDown("Fire1"))
         {
-            if(!didDialogueStart)
+            if (!didDialogueStart)
             {
-            StartDialogue();
+                StartDialogue();
             }
-            else if(dialogueText.text == dialogueLines[lineIndex])
+            else if (dialogueText.text == dialogueLines[lineIndex])
             {
                 NexDialogueLine();
             }
@@ -32,8 +41,11 @@ public class Dialogue : MonoBehaviour
             {
                 StopAllCoroutines();
                 dialogueText.text = dialogueLines[lineIndex];
+
             }
         }
+        
+
     }
 
     private void StartDialogue()
@@ -42,10 +54,11 @@ public class Dialogue : MonoBehaviour
         dialoguePanel.SetActive(true);
         lineIndex = 0;
         StartCoroutine(ShowLine());
+
     }
     private IEnumerator ShowLine()
     {
-        dialogueText.text = string.Empty;  
+        dialogueText.text = string.Empty;
 
         foreach (char ch in dialogueLines[lineIndex])
         {
@@ -68,13 +81,21 @@ public class Dialogue : MonoBehaviour
     private void NexDialogueLine()
     {
         lineIndex++;
-        if(lineIndex < dialogueLines.Length)
+        if (lineIndex < dialogueLines.Length)
         {
             StartCoroutine(ShowLine());
         }
-        else{
+        else
+        {
             didDialogueStart = false;
             dialoguePanel.SetActive(false);
+            postProcessZone.SetActive(true);
+            siren.Play();
+            player.position = maskPos.position;
+            maskInTheFloor.SetActive(true);
+            diaologueZone.SetActive(false);
         }
     }
+
+
 }

@@ -7,6 +7,9 @@ public class CameraMovement : MonoBehaviour
     public float mouseSensitivity = 80f;
     public Transform player;
     public new Transform camera;
+    public GameObject principalCamera;
+    public GameObject secondaryCamera;
+    public GameObject finalSprite;
     public float rayDistance = 2f;
     float xRotation = 0;
     public RaycastHit hit;
@@ -14,13 +17,21 @@ public class CameraMovement : MonoBehaviour
     public bool cubeViolet;
     public bool cubeGreen;
     public Texture2D pointer;
-    public Texture2D bluePointer;
+    public Texture2D redPointer;
     bool canInteract = false;
+    public GameObject dialogueZone;
+    public Dialogue dialogueScript;
+    public GameObject maskInTheFloor;
+    public GameObject maskInCamera;
+
+    private bool final;
 
 
     private void Start()
     {
-        
+        dialogueZone = GameObject.Find("DialogueZone");
+        dialogueScript = dialogueZone.GetComponent<Dialogue>();
+        maskInTheFloor = dialogueScript.maskInTheFloor;
 
     }
     void Update()
@@ -34,12 +45,13 @@ public class CameraMovement : MonoBehaviour
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
         player.Rotate(Vector3.up * mouseX);
-        
+
         Debug.DrawRay(camera.position, camera.forward * rayDistance, Color.blue);
 
         SearchObject();
 
         Interactable();
+        GrabMask();
 
     }
 
@@ -48,14 +60,14 @@ public class CameraMovement : MonoBehaviour
         canInteract = false;
         if (Physics.Raycast(camera.position, camera.forward * rayDistance, out hit, rayDistance, LayerMask.GetMask("Interactable")))
         {
-                canInteract = true;
+            canInteract = true;
         }
-        
+
     }
 
     void Interactable()
     {
-        
+
         if (Physics.Raycast(camera.position, camera.forward * rayDistance, out hit, rayDistance))
         {
             if (hit.collider.GetComponent<CubesPuzzle>() == true)
@@ -100,16 +112,45 @@ public class CameraMovement : MonoBehaviour
         }
 
     }
-    
+
     void OnGUI()
     {
         Rect rect = new Rect(Screen.width / 2, Screen.height / 2, pointer.width, pointer.height);
         GUI.DrawTexture(rect, pointer);
-        if(canInteract)
+        if (canInteract)
         {
-            GUI.DrawTexture(rect, bluePointer);
+            GUI.DrawTexture(rect, redPointer);
         }
     }
+    void GrabMask()
+    {
+        if (Physics.Raycast(camera.position, camera.forward * rayDistance, out hit, rayDistance) && hit.transform.tag == "Mask" && Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("anda desde el click");
+            maskInTheFloor.SetActive(false);
+            maskInCamera.SetActive(true);
+            final = true;
+            StartCoroutine(ChageCamera());
+
+        }
+    }
+    void Final()
+    {
+        if (final == true)
+        {
+            principalCamera.SetActive(false);
+            secondaryCamera.SetActive(true);
+            finalSprite.SetActive(true);
+        }
+    }
+    private IEnumerator ChageCamera()
+    {
+        yield return new WaitForSeconds(5);
+        Final();
+
+    }
+
+
 
 }
 

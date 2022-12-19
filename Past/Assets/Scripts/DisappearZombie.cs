@@ -9,6 +9,7 @@ public class DisappearZombie : MonoBehaviour
     public GameObject Candle;
     public AudioSource sound;
     public GameObject desactiveGameObject;
+    public Animator zombieAnim;
 
 
     private void OnTriggerEnter(Collider other)
@@ -16,7 +17,7 @@ public class DisappearZombie : MonoBehaviour
 
         if (other.tag == "Player")
         {
-            zombie.SetActive(false);
+            zombieAnim.SetBool("isAngry", true);
             sound.Play();
             Candle.SetActive(true);
             StartCoroutine("desactive");
@@ -25,7 +26,8 @@ public class DisappearZombie : MonoBehaviour
 
     IEnumerator desactive()
     {
-        yield return new WaitForSeconds(7);
+        yield return new WaitForSeconds(3);
+        zombie.SetActive(false);
         Destroy(desactiveGameObject);
     }
 

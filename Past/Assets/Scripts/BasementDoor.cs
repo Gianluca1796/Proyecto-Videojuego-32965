@@ -5,7 +5,8 @@ using UnityEngine;
 public class BasementDoor : MonoBehaviour
 {
     public int key;
-    private GameObject basementDoor;
+    public GameObject activeZone;
+    public GameObject isClosedZoned;
     private GameObject keyObject;
     public GameObject keyUI;
     public GameObject cam;
@@ -17,7 +18,6 @@ public class BasementDoor : MonoBehaviour
 
     private void Start()
     {
-        basementDoor = GameObject.Find("BasementDoor");
         keyObject = GameObject.Find("Key");
         cam = GameObject.Find("Camera");
         camTransform = cam.GetComponent<Transform>();
@@ -37,11 +37,12 @@ public class BasementDoor : MonoBehaviour
         {
             Debug.Log("anda desde BasementDoor");
             keyUI.SetActive(true);
-            basementDoor.SetActive(false);
+            activeZone.SetActive(true);
+            isClosedZoned.SetActive(false);
             Destroy(keyObject);
         }
     }
-    void TakeKey()
+    public void TakeKey()
     {
         if (Physics.Raycast(camTransform.position, camTransform.forward * rayDistance, out hit, rayDistance))
         {
