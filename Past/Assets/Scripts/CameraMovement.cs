@@ -10,6 +10,7 @@ public class CameraMovement : MonoBehaviour
     public GameObject principalCamera;
     public GameObject secondaryCamera;
     public GameObject finalSprite;
+    public GameObject finalNote;
     public float rayDistance = 2f;
     float xRotation = 0;
     public RaycastHit hit;
@@ -132,6 +133,7 @@ public class CameraMovement : MonoBehaviour
             final = true;
             StartCoroutine(ChageCamera());
 
+
         }
     }
     void Final()
@@ -141,6 +143,8 @@ public class CameraMovement : MonoBehaviour
             principalCamera.SetActive(false);
             secondaryCamera.SetActive(true);
             finalSprite.SetActive(true);
+            finalNote.SetActive(true);
+            
         }
     }
     private IEnumerator ChageCamera()
